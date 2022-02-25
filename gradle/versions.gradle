@@ -1,0 +1,103 @@
+ext.buildVersions = [
+        compileSdkVersion: 32,
+        minSdkVersion    : 21,
+        targetSdkVersion : 32,
+
+        versionCode      : 1,
+        versionName      : '1.0.0'
+]
+
+ext.versions = [
+        androidx: [
+                activity : '1.3.1',
+                appcompat: '1.4.1',
+                compose  : '1.1.0',
+                lifecycle: '2.4.1',
+                ktxcore  : '1.7.0',
+                material : '1.5.0',
+                room     : '2.4.1',
+        ],
+        hilt    : [
+                dagger  : '2.40.5',
+                androidx: [
+                        core     : '1.0.0',
+                        lifecycle: '1.0.0-alpha03',
+                ]
+        ],
+        intellij: [
+                coroutines: '1.6.0',
+        ],
+        timber  : '5.0.1',
+        test    : [
+                junit   : '4.13.2',
+                androidx: [
+                        junit   : '1.1.3',
+                        espresso: '3.4.0',
+                ],
+                kotest  : [
+                        core  : '5.1.0',
+                        plugin: '4.2.6',
+                ],
+                mockk   : '1.12.2',
+        ]
+]
+
+ext.deps = [:]
+
+deps.androidx = [
+        appcompat: "androidx.appcompat:appcompat:$versions.androidx.appcompat",
+        compose  : [
+                activity     : "androidx.activity:activity-compose:$versions.androidx.activity",
+                lifecycle    : "androidx.lifecycle:lifecycle-viewmodel-compose:$versions.androidx.lifecycle",
+                material     : "androidx.compose.material:material:$versions.androidx.compose",
+                materialicons: "androidx.compose.material:material-icons-extended:$versions.androidx.compose",
+                preview      : "androidx.compose.ui:ui-tooling-preview:$versions.androidx.compose",
+                tooling      : "androidx.compose.ui:ui-tooling:$versions.androidx.compose",
+                ui           : "androidx.compose.ui:ui:$versions.androidx.compose",
+        ],
+        ktxcore  : "androidx.core:core-ktx:$versions.androidx.ktxcore",
+        room     : [
+                compiler: "androidx.room:room-compiler:$versions.androidx.room",
+                kotlin  : "androidx.room:room-ktx:$versions.androidx.room",
+                runtime : "androidx.room:room-runtime:$versions.androidx.room",
+        ],
+        viewmodel: "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.androidx.lifecycle",
+]
+
+deps.hilt = [
+        androidcompiler: "com.google.dagger:hilt-android-compiler:$versions.hilt.dagger",
+        compiler       : "androidx.hilt:hilt-compiler:$versions.hilt.androidx.core",
+        core           : "com.google.dagger:hilt-android:$versions.hilt.dagger",
+        lifecycle      : "androidx.hilt:hilt-lifecycle-viewmodel:$versions.hilt.androidx.lifecycle",
+        navigation     : "androidx.hilt:hilt-navigation-compose:$versions.hilt.androidx.core",
+        plugin         : "com.google.dagger:hilt-android-gradle-plugin:$versions.hilt.dagger",
+]
+
+deps.intellij = [
+        coroutines: "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.intellij.coroutines"
+]
+
+deps.moshi = [
+        core   : "com.squareup.moshi:moshi-kotlin:$versions.moshi",
+        codegen: "com.squareup.moshi:moshi-kotlin-codegen:$versions.moshi"
+]
+
+deps.retrofit = "com.squareup.retrofit2:retrofit:$versions.retrofit"
+deps.timber = "com.jakewharton.timber:timber:$versions.timber"
+
+deps.test = [
+        androidx: [
+                espresso: "androidx.test.espresso:espresso-core:$versions.test.androidx.espresso",
+                junit   : "androidx.test.ext:junit:$versions.test.androidx.junit",
+        ],
+        compose : "androidx.compose.ui:ui-test-junit4:$versions.androidx.compose",
+        junit   : "junit:junit:$versions.test.junit",
+        kotest  : [
+                assertions: "io.kotest:kotest-assertions-core:$versions.test.kotest.core",
+                runner    : "io.kotest:kotest-runner-junit5:$versions.test.kotest.core",
+        ],
+        mockk   : [
+                agent: "io.mockk:mockk-agent-jvm:$versions.test.mockk",
+                core : "io.mockk:mockk:$versions.test.mockk",
+        ],
+]
