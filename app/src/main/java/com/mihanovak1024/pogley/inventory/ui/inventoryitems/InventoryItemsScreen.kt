@@ -3,12 +3,15 @@ package com.mihanovak1024.pogley.inventory.ui.inventoryitems
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.mihanovak1024.pogley.inventory.domain.InventoryItemEvent
 import com.mihanovak1024.pogley.inventory.ui.inventoryitems.components.InventoryItemEntry
 import timber.log.Timber
 
@@ -16,11 +19,19 @@ import timber.log.Timber
 @Composable
 fun InventoryItemsScreen(
     navController: NavController,
-    viewModel: InventoryViewModel,
+    viewModel: InventoryViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state.value
 
-    Scaffold {
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(
+                backgroundColor = MaterialTheme.colors.primary,
+                onClick = { /*TODO during addScreen implementation*/ }) {
+                Icon(imageVector = Icons.Filled.Add, contentDescription = "Add new")
+            }
+        }
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -36,7 +47,10 @@ fun InventoryItemsScreen(
                 items(state.items) { item ->
                     InventoryItemEntry(
                         inventoryItem = item,
-                        onDeleteClick = { Timber.d("onDeleteClicked") }
+                        onDeleteClick = {
+                            Timber.d("onDeleteClicked")
+                            viewModel.onEvent(InventoryItemEvent.Delete(item))
+                        }
                     )
                 }
             }

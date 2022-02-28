@@ -4,11 +4,13 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mihanovak1024.pogley.inventory.domain.InventoryItemEvent
 import com.mihanovak1024.pogley.inventory.domain.usecase.InventoryItemUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,6 +25,16 @@ class InventoryViewModel @Inject constructor(
 
     init {
         getInventoryItems()
+    }
+
+    fun onEvent(event: InventoryItemEvent) {
+        when (event) {
+            is InventoryItemEvent.Delete -> {
+                viewModelScope.launch {
+                    inventoryItemUseCases.deleteInventoryItem(event.inventoryItem)
+                }
+            }
+        }
     }
 
     private fun getInventoryItems() {
