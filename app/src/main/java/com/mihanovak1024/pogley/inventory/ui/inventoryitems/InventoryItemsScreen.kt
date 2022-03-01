@@ -1,21 +1,24 @@
 package com.mihanovak1024.pogley.inventory.ui.inventoryitems
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.mihanovak1024.pogley.R
 import com.mihanovak1024.pogley.inventory.domain.InventoryItemEvent
 import com.mihanovak1024.pogley.inventory.ui.inventoryitems.components.InventoryItemEntry
 import timber.log.Timber
 
-// TODO: update hilt view model after navigation is implemented
+@ExperimentalMaterial3Api
 @Composable
 fun InventoryItemsScreen(
     navController: NavController,
@@ -24,9 +27,11 @@ fun InventoryItemsScreen(
     val state = viewModel.state.value
 
     Scaffold(
+        modifier = Modifier.background(MaterialTheme.colorScheme.background),
         floatingActionButton = {
             FloatingActionButton(
-                backgroundColor = MaterialTheme.colors.primary,
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
                 onClick = { /*TODO during addScreen implementation*/ }) {
                 Icon(imageVector = Icons.Filled.Add, contentDescription = "Add new")
             }
@@ -37,7 +42,10 @@ fun InventoryItemsScreen(
                 .fillMaxSize()
                 .padding(20.dp)
         ) {
-            Text(text = "InventoryItemsList")
+            Text(
+                text = stringResource(id = R.string.your_inventory),
+                style = MaterialTheme.typography.headlineMedium
+            )
             Spacer(modifier = Modifier.height(20.dp))
             LazyColumn(
                 modifier = Modifier

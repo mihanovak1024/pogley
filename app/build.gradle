@@ -55,10 +55,13 @@ dependencies {
 
     implementation deps.androidx.compose.activity
     implementation deps.androidx.compose.lifecycle
+    implementation deps.androidx.compose.material3
     implementation deps.androidx.compose.material
     implementation deps.androidx.compose.materialicons
     implementation deps.androidx.compose.preview
     implementation deps.androidx.compose.ui
+
+    implementation deps.google.material
 
     implementation deps.hilt.core
     kapt deps.hilt.androidcompiler

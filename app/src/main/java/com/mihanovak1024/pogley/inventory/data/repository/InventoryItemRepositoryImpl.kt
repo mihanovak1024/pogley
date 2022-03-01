@@ -9,7 +9,22 @@ import javax.inject.Inject
 // TODO: replace dummy hardcoded list with actual data sources
 class InventoryItemRepositoryImpl @Inject constructor() : InventoryItemRepository {
 
-    private val temporaryList = MutableStateFlow(listOf(InventoryItem("lele123"), InventoryItem("456lele")))
+    private val temporaryList = MutableStateFlow(
+        listOf(
+            InventoryItem(
+                "lele123",
+                "Screw Head (2x2)",
+                10,
+                "Screws for wood environments with good grip that stays put for all eternity and ever and ever and ever."
+            ),
+            InventoryItem(
+                "456lele",
+                "Wood Stick(10x2)",
+                20,
+                "Wooden stick for various different situations."
+            )
+        )
+    )
 
     override fun getInventoryItems(): Flow<List<InventoryItem>> {
         return temporaryList
