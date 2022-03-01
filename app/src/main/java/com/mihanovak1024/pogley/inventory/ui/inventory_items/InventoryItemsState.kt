@@ -1,4 +1,4 @@
-package com.mihanovak1024.pogley.inventory.ui.inventoryitems
+package com.mihanovak1024.pogley.inventory.ui.inventory_items
 
 import com.mihanovak1024.pogley.inventory.domain.model.InventoryItem
 

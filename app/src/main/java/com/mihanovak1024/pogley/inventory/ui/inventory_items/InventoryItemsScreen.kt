@@ -1,4 +1,4 @@
-package com.mihanovak1024.pogley.inventory.ui.inventoryitems
+package com.mihanovak1024.pogley.inventory.ui.inventory_items
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -15,7 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mihanovak1024.pogley.R
 import com.mihanovak1024.pogley.inventory.domain.InventoryItemEvent
-import com.mihanovak1024.pogley.inventory.ui.inventoryitems.components.InventoryItemEntry
+import com.mihanovak1024.pogley.inventory.ui.inventory_items.components.InventoryItemEntry
 import timber.log.Timber
 
 @ExperimentalMaterial3Api

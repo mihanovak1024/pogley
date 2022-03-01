@@ -1,4 +1,4 @@
-package com.mihanovak1024.pogley.inventory.ui.inventoryitems.components
+package com.mihanovak1024.pogley.inventory.ui.inventory_items.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
