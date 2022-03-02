@@ -1,9 +1,6 @@
 package com.mihanovak1024.pogley.inventory.ui.create_edit
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.*
@@ -14,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mihanovak1024.pogley.R
+import com.mihanovak1024.pogley.inventory.ui.create_edit.components.PogleyEditNumber
 import com.mihanovak1024.pogley.inventory.ui.create_edit.components.PogleyEditText
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,26 +51,34 @@ fun CreateEditInventoryItemScreen(
                 style = MaterialTheme.typography.headlineMedium
             )
             Spacer(modifier = Modifier.height(10.dp))
-            PogleyEditText(
-                value = nameState.value.text,
-                onValueChanged = { name: String -> viewModel.onEvent(AddInventoryItemEvent.InsertName(name)) },
-                hint = stringResource(id = nameState.value.hintStringId),
-                shouldShowHint = nameState.value.shouldShowHint,
-                modifier = Modifier.padding(top = 10.dp, bottom = 10.dp)
-            )
-            PogleyEditText(
-                value = quantityState.value.text,
-                onValueChanged = { quantity: String -> viewModel.onEvent(AddInventoryItemEvent.InsertQuantity(quantity)) },
-                hint = stringResource(id = quantityState.value.hintStringId),
-                shouldShowHint = quantityState.value.shouldShowHint,
-                modifier = Modifier.padding(top = 10.dp, bottom = 10.dp)
-            )
+            Row(
+                modifier = Modifier
+                    .padding(top = 10.dp, bottom = 10.dp)
+            ) {
+                PogleyEditText(
+                    value = nameState.value.text,
+                    onValueChanged = { name: String -> viewModel.onEvent(AddInventoryItemEvent.InsertName(name)) },
+                    hint = stringResource(id = nameState.value.hintStringId),
+                    shouldShowHint = nameState.value.shouldShowHint,
+                    modifier = Modifier
+                        .weight(2f)
+                )
+                Spacer(modifier = Modifier.width(10.dp))
+                PogleyEditNumber(
+                    value = quantityState.value.number,
+                    onValueChanged = { quantity: Int -> viewModel.onEvent(AddInventoryItemEvent.InsertQuantity(quantity)) },
+                    hint = stringResource(id = quantityState.value.hintStringId),
+                    shouldShowHint = quantityState.value.shouldShowHint,
+                    modifier = Modifier
+                        .weight(1f)
+                )
+            }
+            Spacer(modifier = Modifier.height(10.dp))
             PogleyEditText(
                 value = descriptionState.value.text,
                 onValueChanged = { description: String -> viewModel.onEvent(AddInventoryItemEvent.InsertDescription(description)) },
                 hint = stringResource(id = descriptionState.value.hintStringId),
-                shouldShowHint = descriptionState.value.shouldShowHint,
-                modifier = Modifier.padding(top = 10.dp, bottom = 10.dp)
+                shouldShowHint = descriptionState.value.shouldShowHint
             )
         }
     }

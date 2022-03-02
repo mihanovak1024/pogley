@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.mihanovak1024.pogley.R
 import com.mihanovak1024.pogley.inventory.domain.model.InventoryItem
 import com.mihanovak1024.pogley.inventory.domain.usecase.InventoryItemUseCases
+import com.mihanovak1024.pogley.inventory.ui.create_edit.InventoryItemTextFieldState.InventoryItemNumberFieldState
+import com.mihanovak1024.pogley.inventory.ui.create_edit.InventoryItemTextFieldState.InventoryItemStringFieldState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -18,25 +20,25 @@ class CreateEditInventoryItemViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _name = mutableStateOf(
-        InventoryItemTextFieldState(
-            hintStringId = R.string.insert_name
+        InventoryItemStringFieldState(
+            hintId = R.string.insert_name
         )
     )
-    val name: State<InventoryItemTextFieldState> = _name
+    val name: State<InventoryItemStringFieldState> = _name
 
     private val _quantity = mutableStateOf(
-        InventoryItemTextFieldState(
-            hintStringId = R.string.insert_quantity
+        InventoryItemNumberFieldState(
+            hintId = R.string.insert_quantity
         )
     )
-    val quantity: State<InventoryItemTextFieldState> = _quantity
+    val quantity: State<InventoryItemNumberFieldState> = _quantity
 
     private val _description = mutableStateOf(
-        InventoryItemTextFieldState(
-            hintStringId = R.string.insert_description
+        InventoryItemStringFieldState(
+            hintId = R.string.insert_description
         )
     )
-    val description: State<InventoryItemTextFieldState> = _description
+    val description: State<InventoryItemStringFieldState> = _description
 
     val isExistingInventoryItem = mutableStateOf(false)
 
@@ -53,15 +55,15 @@ class CreateEditInventoryItemViewModel @Inject constructor(
                 text = event.name
             )
             is AddInventoryItemEvent.InsertQuantity -> _quantity.value = quantity.value.copy(
-                text = event.quantity
+                number = event.quantity
             )
             is AddInventoryItemEvent.InsertDescription -> _description.value = description.value.copy(
                 text = event.description
             )
             is AddInventoryItemEvent.Save -> {
-                if (_name.value.text.isNotEmpty() &&
-                    _description.value.text.isNotEmpty() &&
-                    _quantity.value.text.isNotEmpty()
+                if (_name.value.isValueValid &&
+                    _description.value.isValueValid &&
+                    _quantity.value.isValueValid
                 ) {
                     Timber.d("Saved")
                     viewModelScope.launch {
@@ -69,7 +71,7 @@ class CreateEditInventoryItemViewModel @Inject constructor(
                             InventoryItem(
                                 id = editedInventoryItemId ?: createUniqueId(),
                                 name = _name.value.text,
-                                quantity = _quantity.value.text.toInt(),
+                                quantity = _quantity.value.number,
                                 description = _description.value.text
                             )
                         )
