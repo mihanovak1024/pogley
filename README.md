@@ -1,14 +1,14 @@
-# pogley
+# Pogley :package: :eyes:
 
 An app that handles your warehouse, garage, workshop or any other inventory, so you don't need to keep track of it in your head and you know
 what you need to buy and what's already in your stock.
 
-## Project Intentions
+## Project Intentions :thinking:
 
 The project was intended to tinker around Android Jetpack Compose and see how Google has designed the Android Native declarative paradigm,
 compared to other cross-platform ones (React Native, Flutter,...).
 
-## Learnings
+## Learnings :books:
 
 - Jetpack Compose
   - Composable Components
