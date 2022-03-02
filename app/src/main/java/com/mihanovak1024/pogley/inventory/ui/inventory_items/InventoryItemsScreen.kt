@@ -14,8 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mihanovak1024.pogley.R
-import com.mihanovak1024.pogley.inventory.domain.InventoryItemEvent
 import com.mihanovak1024.pogley.inventory.ui.inventory_items.components.InventoryItemEntry
+import com.mihanovak1024.pogley.inventory.ui.util.Screen
 import timber.log.Timber
 
 @ExperimentalMaterial3Api
@@ -32,7 +32,7 @@ fun InventoryItemsScreen(
             FloatingActionButton(
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary,
-                onClick = { /*TODO during addScreen implementation*/ }) {
+                onClick = { navController.navigate(Screen.CreateEditInventoryItemScreen.route) }) {
                 Icon(imageVector = Icons.Filled.Add, contentDescription = "Add new")
             }
         }

@@ -1,6 +1,17 @@
 <resources>
     <string name="app_name">Pogley</string>
 
+    <!--  Home Screen  -->
     <string name="your_inventory">Your Inventory</string>
     <string name="quantity">Quantity:</string>
+
+    <!--  Create/Edit Screen  -->
+    <string name="new_inventory_item">New Inventory Item</string>
+    <string name="edit_inventory_item">Edit Inventory Item</string>
+
+    <string name="insert_name">Insert name</string>
+    <string name="insert_description">Insert description</string>
+    <string name="insert_quantity">Insert quantity</string>
+
+    <string name="save_inventory_item">Save Item</string>
 </resources>

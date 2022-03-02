@@ -9,6 +9,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.mihanovak1024.pogley.inventory.ui.create_edit.CreateEditInventoryItemScreen
 import com.mihanovak1024.pogley.inventory.ui.inventory_items.InventoryItemsScreen
 import com.mihanovak1024.pogley.inventory.ui.util.Screen
 import com.mihanovak1024.pogley.ui.theme.PogleyTheme
@@ -32,6 +33,11 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable(route = Screen.InventoryItemsScreen.route) {
                             InventoryItemsScreen(
+                                navController = navController
+                            )
+                        }
+                        composable(route = Screen.CreateEditInventoryItemScreen.route) {
+                            CreateEditInventoryItemScreen(
                                 navController = navController
                             )
                         }
