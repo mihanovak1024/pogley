@@ -2,11 +2,13 @@ package com.mihanovak1024.pogley.inventory.ui.create_edit
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mihanovak1024.pogley.R
 import com.mihanovak1024.pogley.inventory.domain.model.InventoryItem
 import com.mihanovak1024.pogley.inventory.domain.usecase.InventoryItemUseCases
+import com.mihanovak1024.pogley.inventory.ui.MainActivity
 import com.mihanovak1024.pogley.inventory.ui.create_edit.InventoryItemTextFieldState.InventoryItemNumberFieldState
 import com.mihanovak1024.pogley.inventory.ui.create_edit.InventoryItemTextFieldState.InventoryItemStringFieldState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CreateEditInventoryItemViewModel @Inject constructor(
-    private val inventoryItemUseCases: InventoryItemUseCases
+    private val inventoryItemUseCases: InventoryItemUseCases,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _name = mutableStateOf(
@@ -42,12 +45,33 @@ class CreateEditInventoryItemViewModel @Inject constructor(
 
     val isExistingInventoryItem = mutableStateOf(false)
 
-    // TODO: populate this from navigation route InvetnoryItemId query param
     private var editedInventoryItemId: String? = null
         set(value) {
             isExistingInventoryItem.value = value != null
             field = value
         }
+
+    init {
+        savedStateHandle.get<String>(MainActivity.NAVIGATION_ARGUMENT_INVENTORY_ITEM_ID)?.let {
+            if (it.isNotEmpty()) {
+                viewModelScope.launch {
+                    val inventoryItem = inventoryItemUseCases.getInventoryItemById(it)
+                    if (inventoryItem != null) {
+                        editedInventoryItemId = inventoryItem.id
+                        _name.value = name.value.copy(
+                            text = inventoryItem.name
+                        )
+                        _description.value = description.value.copy(
+                            text = inventoryItem.description
+                        )
+                        _quantity.value = quantity.value.copy(
+                            number = inventoryItem.quantity
+                        )
+                    }
+                }
+            }
+        }
+    }
 
     fun onEvent(event: AddInventoryItemEvent) {
         when (event) {

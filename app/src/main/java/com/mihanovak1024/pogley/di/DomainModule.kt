@@ -1,10 +1,7 @@
 package com.mihanovak1024.pogley.di
 
 import com.mihanovak1024.pogley.inventory.domain.repository.InventoryItemRepository
-import com.mihanovak1024.pogley.inventory.domain.usecase.AddInventoryItemUseCase
-import com.mihanovak1024.pogley.inventory.domain.usecase.DeleteInventoryItemUseCase
-import com.mihanovak1024.pogley.inventory.domain.usecase.GetInventoryItemsUseCase
-import com.mihanovak1024.pogley.inventory.domain.usecase.InventoryItemUseCases
+import com.mihanovak1024.pogley.inventory.domain.usecase.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,6 +17,7 @@ object DomainModule {
     fun provideInventoryItemUseCases(repository: InventoryItemRepository): InventoryItemUseCases {
         return InventoryItemUseCases(
             getInventoryItems = GetInventoryItemsUseCase(repository),
+            getInventoryItemById = GetInventoryItemByIdUseCase(repository),
             addInventoryItem = AddInventoryItemUseCase(repository),
             deleteInventoryItem = DeleteInventoryItemUseCase(repository)
         )

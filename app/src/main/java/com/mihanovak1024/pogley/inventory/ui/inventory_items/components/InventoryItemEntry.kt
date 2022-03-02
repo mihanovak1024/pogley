@@ -1,5 +1,6 @@
 package com.mihanovak1024.pogley.inventory.ui.inventory_items.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -21,11 +22,16 @@ import com.mihanovak1024.pogley.ui.theme.PogleyTheme
 @Composable
 fun InventoryItemEntry(
     inventoryItem: InventoryItem,
-    onDeleteClick: () -> Unit
+    onDeleteClick: () -> Unit,
+    onItemClick: () -> Unit
 ) {
 
     OutlinedCard(
-        containerColor = MaterialTheme.colorScheme.surface
+        containerColor = MaterialTheme.colorScheme.surface,
+        modifier = Modifier
+            .clickable {
+                onItemClick()
+            }
     ) {
         Row {
             Column(
@@ -76,6 +82,6 @@ fun InventoryItemEntryPreview() {
             name = "Screw Head(2x2)",
             quantity = 10,
             description = "Screws for wood environments with good grip that stays put for all eternity."
-        ), onDeleteClick = {})
+        ), onDeleteClick = {}, onItemClick = {})
     }
 }
