@@ -14,8 +14,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mihanovak1024.pogley.R
-import com.mihanovak1024.pogley.inventory.domain.InventoryItemEvent
+import com.mihanovak1024.pogley.inventory.ui.MainActivity
 import com.mihanovak1024.pogley.inventory.ui.inventory_items.components.InventoryItemEntry
+import com.mihanovak1024.pogley.inventory.ui.util.Screen
 import timber.log.Timber
 
 @ExperimentalMaterial3Api
@@ -32,7 +33,7 @@ fun InventoryItemsScreen(
             FloatingActionButton(
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary,
-                onClick = { /*TODO during addScreen implementation*/ }) {
+                onClick = { navController.navigate(Screen.CreateEditInventoryItemScreen.getRouteDefinition()) }) {
                 Icon(imageVector = Icons.Filled.Add, contentDescription = "Add new")
             }
         }
@@ -58,6 +59,11 @@ fun InventoryItemsScreen(
                         onDeleteClick = {
                             Timber.d("onDeleteClicked")
                             viewModel.onEvent(InventoryItemEvent.Delete(item))
+                        },
+                        onItemClick = {
+                            navController.navigate(
+                                Screen.CreateEditInventoryItemScreen.getRoute(MainActivity.NAVIGATION_ARGUMENT_INVENTORY_ITEM_ID to item.id)
+                            )
                         }
                     )
                 }

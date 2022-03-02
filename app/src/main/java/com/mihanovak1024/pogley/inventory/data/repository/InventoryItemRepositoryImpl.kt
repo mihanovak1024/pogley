@@ -30,6 +30,10 @@ class InventoryItemRepositoryImpl @Inject constructor() : InventoryItemRepositor
         return temporaryList
     }
 
+    override suspend fun getInventoryItemById(inventoryItemId: String): InventoryItem? {
+        return temporaryList.value.firstOrNull { it.id == inventoryItemId }
+    }
+
     override suspend fun addInventoryItem(inventoryItem: InventoryItem) {
         val list = temporaryList.value.toMutableList()
         list.find { it.id == inventoryItem.id }?.let {
