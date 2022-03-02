@@ -12,8 +12,9 @@ import com.mihanovak1024.pogley.inventory.ui.MainActivity
 import com.mihanovak1024.pogley.inventory.ui.create_edit.InventoryItemTextFieldState.InventoryItemNumberFieldState
 import com.mihanovak1024.pogley.inventory.ui.create_edit.InventoryItemTextFieldState.InventoryItemStringFieldState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -44,6 +45,9 @@ class CreateEditInventoryItemViewModel @Inject constructor(
     val description: State<InventoryItemStringFieldState> = _description
 
     val isExistingInventoryItem = mutableStateOf(false)
+
+    private val _addInventoryItemEvents = MutableSharedFlow<SaveInventoryItemEvents>()
+    val addInventoryItemEvents = _addInventoryItemEvents.asSharedFlow()
 
     private var editedInventoryItemId: String? = null
         set(value) {
@@ -85,12 +89,11 @@ class CreateEditInventoryItemViewModel @Inject constructor(
                 text = event.description
             )
             is AddInventoryItemEvent.Save -> {
-                if (_name.value.isValueValid &&
-                    _description.value.isValueValid &&
-                    _quantity.value.isValueValid
-                ) {
-                    Timber.d("Saved")
-                    viewModelScope.launch {
+                viewModelScope.launch {
+                    if (_name.value.isValueValid &&
+                        _description.value.isValueValid &&
+                        _quantity.value.isValueValid
+                    ) {
                         inventoryItemUseCases.addInventoryItem(
                             InventoryItem(
                                 id = editedInventoryItemId ?: createUniqueId(),
@@ -99,9 +102,10 @@ class CreateEditInventoryItemViewModel @Inject constructor(
                                 description = _description.value.text
                             )
                         )
+                        _addInventoryItemEvents.emit(SaveInventoryItemEvents.Saved)
+                    } else {
+                        _addInventoryItemEvents.emit(SaveInventoryItemEvents.NotSaved("Something went wrong"))
                     }
-                } else {
-                    Timber.d("Not saved")
                 }
             }
         }
@@ -110,4 +114,9 @@ class CreateEditInventoryItemViewModel @Inject constructor(
     // TODO: temporary, later on Database will generate one itself
     private fun createUniqueId(): String = "${System.currentTimeMillis()}"
 
+}
+
+sealed class SaveInventoryItemEvents {
+    object Saved : SaveInventoryItemEvents()
+    class NotSaved(val message: String) : SaveInventoryItemEvents()
 }

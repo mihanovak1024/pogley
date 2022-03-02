@@ -5,6 +5,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -13,6 +14,8 @@ import androidx.navigation.NavController
 import com.mihanovak1024.pogley.R
 import com.mihanovak1024.pogley.inventory.ui.create_edit.components.PogleyEditNumber
 import com.mihanovak1024.pogley.inventory.ui.create_edit.components.PogleyEditText
+import kotlinx.coroutines.flow.collectLatest
+import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,6 +29,17 @@ fun CreateEditInventoryItemScreen(
     val descriptionState = viewModel.description
 
     val isExistingInventoryItem = viewModel.isExistingInventoryItem
+
+    LaunchedEffect(key1 = true) {
+        viewModel.addInventoryItemEvents.collectLatest {
+            when (it) {
+                is SaveInventoryItemEvents.Saved -> navController.navigateUp()
+                is SaveInventoryItemEvents.NotSaved -> {
+                    Timber.d("message = ${it.message}")
+                }
+            }
+        }
+    }
 
     Scaffold(
         floatingActionButton = {
