@@ -11,9 +11,10 @@ compared to other cross-platform ones (React Native, Flutter,...).
 ## Learnings
 
 - Jetpack Compose
-    - Composable Components
-    - Navigation in Compose
-    - State
+  - Composable Components
+  - Navigation
+  - State Management
 - Clean Architecture (Domain, Data and UI layers)
 - Hilt Dependency Injection (the differences from Dagger2)
 - Kotlin Flows (instead of LiveData)
+- Material You (Material3 - Guidelines, Theme Builder)
